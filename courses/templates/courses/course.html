@@ -1,0 +1,31 @@
+{% extends "courses/layout.html" %}
+
+{% block body%}
+
+<div class="container py-4">
+    <div class="row">
+      <div class="col-md-8">
+        <h1>{{course.title}}</h1>
+        {{course.description|safe}}  
+        {% if isEnrolled %}
+        <a href="#" class="btn btn-success">Proceed to the course</a>
+        {% else %}
+        <form action="{% url "courses:course_enroll" course.id %}">
+          <button type = "submit" class="btn btn-primary">Enroll Now</button>
+        </form>
+        {% endif %}
+      </div>
+      <div class="col-md-4">
+        <h2>Course Details</h2>
+        <ul class="list-group">
+          <li class="list-group-item"><strong>Students Enrolled:</strong> {{course.participants}}</li>
+          <li class="list-group-item"><strong>Level:</strong> {{course.difficulty}}</li>
+          <li class="list-group-item"><strong>Category:</strong> {{course.category}}</li>
+          <li class="list-group-item"><strong>Type:</strong> {{course.type}}</li>
+          <li class="list-group-item"><strong>Language: </strong> {{course.language}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+{% endblock body%}

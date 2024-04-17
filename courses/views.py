@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Course
+from .models import Course, Lesson
 from accounts.models import User
 
 def index(request):
@@ -40,6 +40,13 @@ def course_lessons(request, ID):
     context = {"lessons": lessons}
     return render(request, "courses/course-lessons.html", context)
 
-def text_lesson_view(request):
-    context = {}
+def text_lesson_view(request, ID):
+    lesson = Lesson.objects.get(id = ID)
+    course = Course.objects.get(id = lesson.course.id)
+    lessons = course.course.all().order_by("order") # getting lessons of particular course.
+    context = {"lessons":lessons, "lesson":lesson}
     return render(request, "courses/text-lesson.html", context)
+
+def video_lesson_view(request, ID):
+    context = {}
+    return render(request, "courses/video-lesson.html", context)

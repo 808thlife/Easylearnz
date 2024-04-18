@@ -45,7 +45,7 @@ def course_enroll(request, ID):
 def course_lessons(request, ID):
     course = Course.objects.get(id = ID)
     lessons = course.course.all().order_by("order") # getting lessons of particular course.
-    context = {"lessons": lessons}
+    context = {"lessons": lessons, "course":course}
     return render(request, "courses/course-lessons.html", context)
 
 @login_required
@@ -61,5 +61,6 @@ def lesson_view(request, ID):
 
 def profile_view(request, ID):
     user = User.objects.get(id = ID)
-    context = {"user":user}
+    total_courses = user.courses.count
+    context = {"user":user, "total_courses":total_courses}
     return render(request, "courses/profile.html", context)

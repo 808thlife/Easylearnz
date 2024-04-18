@@ -31,10 +31,7 @@
         <ul class="nav flex-column">  
             {% for lesson in lessons %}
                 <li class="nav-item">
-                  {% if lesson.course.type == "Text Based" %}
-                      <a href="{% url "courses:text_lesson_view" lesson.id %}" class="nav-link">{{lesson.title}}</a>
-                  {% else %}
-                  {% endif %}
+                      <a href="{% url "courses:lesson_view" lesson.id %}" class="nav-link">{{lesson.title}}</a>
                 </li>
             {% endfor %}
         </ul>

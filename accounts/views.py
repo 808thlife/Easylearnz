@@ -15,9 +15,9 @@ def login_view(request):
         email = request.POST["email"]
         password = request.POST["password"]
         user = authenticate(request, email=email, password=password)
-
-        # Check if authentication successful
+        # Check if authentication successfull
         if user is not None:
+            print("user is not none")
             login(request, user)
             return HttpResponseRedirect(reverse("courses:index"))
         else:
@@ -32,7 +32,7 @@ def signup_view(request):
         return HttpResponseRedirect(reverse("courses:index"))
     else:
         if request.method == "POST":
-
+            
             #getting information from request
             email = request.POST["email"]
             password = request.POST["password"]
@@ -52,16 +52,14 @@ def signup_view(request):
             return render(request, "accounts/login.html", {"messages":"You have successfully created an account! Now You have to Log in"})
         return render(request, "accounts/register.html")
 
-@login_required
-def logout(request):
-    logout(request)
-    return HttpResponseRedirect(reverse("accounts:signup"))
+def logout_view(request):
+    if request.user.is_authenticated:
+        logout(request)
+        return HttpResponseRedirect(reverse("accounts:login"))
+    return HttpResponseRedirect(reverse("accounts:login"))
 
 @login_required
 def delete_account(request):
     user = request.user 
     user.delete()
     return HttpResponseRedirect(reverse("accounts:signup"))
-
-def user_profile(request, ID):
-    return render(request, "accounts/profile.html")

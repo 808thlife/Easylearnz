@@ -228,4 +228,4 @@ CKEDITOR_5_CONFIGS = {
 
 LOGIN_URL = "/accounts/login"
 AUTH_USER_MODEL = "accounts.User"
-AUTHENTICATION_BACKENDS = ["accounts.backends.EmailBackend"]
+AUTHENTICATION_BACKENDS = ["accounts.backends.EmailBackend",]

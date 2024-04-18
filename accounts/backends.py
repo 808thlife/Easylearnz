@@ -3,12 +3,13 @@ from django.contrib.auth import get_user_model
 
 #overriding authentication method to use email instead of an username.
 class EmailBackend(ModelBackend):
-    def authenticate(self, request, email = None, password = None):
+    def authenticate(self, request, username=None, password=None, **kwargs):
         UserModel = get_user_model()
         try:
-            user = UserModel.objects.get(email=email)
+            user = UserModel.objects.get(email=username)
         except UserModel.DoesNotExist:
             return None
-        if user.check_password(password):
-            return user
+        else:
+            if user.check_password(password):
+                return user
         return None

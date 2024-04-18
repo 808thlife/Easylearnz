@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
+from django.db import IntegrityError
 from .models import User
 
 def login_view(request):
@@ -16,7 +17,6 @@ def login_view(request):
 
         # Check if authentication successful
         if user is not None:
-            print("user is not none")
             login(request, user)
             return HttpResponseRedirect(reverse("courses:index"))
         else:

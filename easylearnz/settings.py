@@ -228,7 +228,6 @@ CKEDITOR_5_CONFIGS = {
 
 LOGIN_URL = "/accounts/login"
 AUTH_USER_MODEL = "accounts.User"
-AUTHENTICATION_BACKENDS = (
+AUTHENTICATION_BACKENDS = [
     "accounts.backends.EmailBackend",
-    'django.contrib.auth.backends.ModelBackend',
-)
+]

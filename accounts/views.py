@@ -1,23 +1,22 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from .models import User
+
 
 def login_view(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse("courses:index"))
     if request.method == "POST":
-
         # Attempt to sign user in
         email = request.POST["email"]
         password = request.POST["password"]
-        user = authenticate(request, email=email, password=password)
-        # Check if authentication successfull
+        user = authenticate(request, username=email, password=password)  # Change this line
+        # Check if authentication successful
         if user is not None:
-            print("user is not none")
             login(request, user)
             return HttpResponseRedirect(reverse("courses:index"))
         else:

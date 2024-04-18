@@ -1,12 +1,14 @@
 from django.shortcuts import render
-
-# Create your views here.
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 def login_view(request):
-    pass
+    return render(request, "accounts/login.html")
 
 def signup_view(request):
-    pass
+    if request.method == "POST":
+        return HttpResponseRedirect(reverse("courses:index"))
+    return render(request, "accounts/register.html")
 
 def logout(request):
     pass

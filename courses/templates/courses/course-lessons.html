@@ -11,11 +11,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Lesson {{lesson.order}}: {{lesson.title}}</h5>
                     <p class="card-text">{{lesson.description}}</p>
-                    {% if lesson.course.type == "Text Based" %}
-                    <a href="{% url "courses:text_lesson_view" lesson.id %}" class="btn btn-primary">View Lesson</a>
-                    {% else %}
-                    <a href="{% url "courses:video_lesson_view" lesson.id %}" class="btn btn-primary">View Lesson</a>
-                    {% endif %}
+                    <a href="{% url "courses:text_lesson_view" lesson.id %}" class="btn btn-primary">View Lesson</a>                    
                 </div>
             </div>
         </div>

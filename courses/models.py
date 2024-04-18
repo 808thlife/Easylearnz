@@ -36,7 +36,6 @@ class Course(models.Model):
     img = models.ImageField(upload_to = "courses/")
     wishlisted = models.IntegerField(default = 0) # indicates how many users wantto compelte this course
     participants = models.IntegerField(default=0)
-    type = models.CharField(choices= COURSE_CATEGORY_CHOICES, default= "vd", max_length=24)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     language = models.ForeignKey(Language, verbose_name=_("Language"), on_delete=models.PROTECT)
@@ -54,3 +53,6 @@ class Lesson(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+
+    def __nonzero__(self):
+        return bool(self.video_content)

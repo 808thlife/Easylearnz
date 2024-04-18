@@ -31,6 +31,9 @@ def course_enroll(request, ID):
 
     isEnrolled = course in current_user.courses.all()
 
+    course.participants +=1
+    course.save()
+
     context = {"isEnrolled":isEnrolled, "course":course}
     return HttpResponseRedirect(reverse("courses:course_view", kwargs={"slug":course.slug}))
 
@@ -40,13 +43,12 @@ def course_lessons(request, ID):
     context = {"lessons": lessons}
     return render(request, "courses/course-lessons.html", context)
 
-def text_lesson_view(request, ID):
+def lesson_view(request, ID):
     lesson = Lesson.objects.get(id = ID)
     course = Course.objects.get(id = lesson.course.id)
-    lessons = course.course.all().order_by("order") # getting lessons of particular course.
-    context = {"lessons":lessons, "lesson":lesson}
-    return render(request, "courses/text-lesson.html", context)
 
-def video_lesson_view(request, ID):
-    context = {}
-    return render(request, "courses/video-lesson.html", context)
+    is_video = lesson.__nonzero__() # checks if there is a video.
+
+    lessons = course.course.all().order_by("order") # getting lessons of particular course.
+    context = {"lessons":lessons, "lesson":lesson, "is_video":is_video}
+    return render(request, "courses/lesson.html", context)

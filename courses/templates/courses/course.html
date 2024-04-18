@@ -8,7 +8,7 @@
         <h1>{{course.title}}</h1>
         {{course.description|safe}}  
         {% if isEnrolled %}
-        <a href="#" class="btn btn-success">Proceed to the course</a>
+        <a href="{% url "courses:course_lessons_view" course.id%}" class="btn btn-success">Proceed to the course</a>
         {% else %}
         <form action="{% url "courses:course_enroll" course.id %}">
           <button type = "submit" class="btn btn-primary">Enroll Now</button>
@@ -21,7 +21,6 @@
           <li class="list-group-item"><strong>Students Enrolled:</strong> {{course.participants}}</li>
           <li class="list-group-item"><strong>Level:</strong> {{course.difficulty}}</li>
           <li class="list-group-item"><strong>Category:</strong> {{course.category}}</li>
-          <li class="list-group-item"><strong>Type:</strong> {{course.type}}</li>
           <li class="list-group-item"><strong>Language: </strong> {{course.language}}</li>
         </ul>
       </div>

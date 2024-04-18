@@ -1,0 +1,56 @@
+{% extends "courses/layout.html" %}
+
+
+
+{% block body %}
+{% comment %} 
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3 col-sm-4 col-12 sticky-top sidebar bg-dark text-white">  <h2>Lessons</h2>
+        <ul class="nav flex-column">  
+              {% for lesson in lessons %}
+                  <li class="nav-item">
+                    {% if lesson.course.type == "Text Based" %}
+                        <a href="{% url "courses:text_lesson_view" lesson.id %}" class="nav-link">{{lesson.title}}</a>
+                    {% else %}
+                    {% endif %}
+                  </li>
+              {% endfor %}
+        </ul>
+      </div>
+      <div class="col-md-9 col-sm-8 col-12 content">
+        {{lesson.text_content|safe}}
+      </div>
+    </div>
+  </div>
+   {% endcomment %}
+
+   <div class="container">
+    <div class="row py-3">
+      <div class="col-3 order-2 sticky-top" id="sticky-sidebar">
+        <ul class="nav flex-column">  
+            {% for lesson in lessons %}
+                <li class="nav-item">
+                  {% if lesson.course.type == "Text Based" %}
+                      <a href="{% url "courses:text_lesson_view" lesson.id %}" class="nav-link">{{lesson.title}}</a>
+                  {% else %}
+                  {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+      </div>
+  
+      <div class="col" id="main">
+        <h1>{{lesson.title}}</h1>
+        {% if is_video %}
+        <div id="trailer" class="section d-flex justify-content-center embed-responsive embed-responsive-16by9 ">
+          <video class="embed-responsive-item" controls>  <source src="{{lesson.video_content.url}}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        {% endif %}
+        {{lesson.text_content|safe}}
+      </div>
+    </div>
+  </div>
+{% endblock body %}

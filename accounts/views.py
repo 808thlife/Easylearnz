@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from .models import User
 
@@ -51,8 +52,16 @@ def signup_view(request):
             return render(request, "accounts/login.html", {"messages":"You have successfully created an account! Now You have to Log in"})
         return render(request, "accounts/register.html")
 
+@login_required
 def logout(request):
-    pass
+    logout(request)
+    return HttpResponseRedirect(reverse("accounts:signup"))
 
+@login_required
 def delete_account(request):
-    pass
+    user = request.user 
+    user.delete()
+    return HttpResponseRedirect(reverse("accounts:signup"))
+
+def user_profile(request, ID):
+    return render(request, "accounts/profile.html")

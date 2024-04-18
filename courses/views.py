@@ -3,7 +3,9 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Course, Lesson
 from accounts.models import User
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def index(request):
     current_user = request.user
     #used only for optimization
@@ -13,6 +15,7 @@ def index(request):
     context = {"courses":courses, "popular_courses":popular_courses}
     return render(request, "courses/index.html", context)
 
+@login_required
 def course_view(request, slug):
     course = Course.objects.get(slug = slug)
 
@@ -23,6 +26,7 @@ def course_view(request, slug):
 
     return render(request, "courses/course.html", context)
 
+@login_required
 def course_enroll(request, ID):
     course = Course.objects.get(id = ID)
     current_user = request.user
@@ -37,12 +41,14 @@ def course_enroll(request, ID):
     context = {"isEnrolled":isEnrolled, "course":course}
     return HttpResponseRedirect(reverse("courses:course_view", kwargs={"slug":course.slug}))
 
+@login_required
 def course_lessons(request, ID):
     course = Course.objects.get(id = ID)
     lessons = course.course.all().order_by("order") # getting lessons of particular course.
     context = {"lessons": lessons}
     return render(request, "courses/course-lessons.html", context)
 
+@login_required
 def lesson_view(request, ID):
     lesson = Lesson.objects.get(id = ID)
     course = Course.objects.get(id = lesson.course.id)
@@ -52,3 +58,8 @@ def lesson_view(request, ID):
     lessons = course.course.all().order_by("order") # getting lessons of particular course.
     context = {"lessons":lessons, "lesson":lesson, "is_video":is_video}
     return render(request, "courses/lesson.html", context)
+
+def profile_view(request, ID):
+    user = User.objects.get(id = ID)
+    context = {"user":user}
+    return render(request, "courses/profile.html", context)

@@ -40,7 +40,7 @@ def signup_view(request):
             #user = authenticate(request, email = email, password = password)
 
             try:
-                user = User.objects.create_user(email, password)
+                user = User.objects.create_user(username,email, password)
                 user.username = username
                 user.save()
             except IntegrityError:

@@ -59,6 +59,7 @@ def lesson_view(request, ID):
     context = {"lessons":lessons, "lesson":lesson, "is_video":is_video}
     return render(request, "courses/lesson.html", context)
 
+@login_required
 def profile_view(request, ID):
     user = User.objects.get(id = ID)
     total_courses = user.courses.count
